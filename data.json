@@ -1,0 +1,48 @@
+{
+    "users": [
+
+        {
+            "id": 2,
+            "name": "Bob",
+            "email": "bob@example.com"
+        }
+    ],
+    "divs": [
+        {
+            "title": "Zachecajaca oferta",
+            "titleColor": "#7a3fa6",
+            
+            "titleFontFamily": "Arial Black, Arial, sans-serif",
+            "text": "Nacisnij mnie aby zbombardowac francje!1!11!1",
+            "textColor": "#333",
+            "textFontSize": "16px",
+            "textFontFamily": "Verdana, sans-serif",
+            "background": "linear-gradient(90deg, #f3e6ff 0%, #e6f7ff 100%)",
+            "border": "2px solid #7a3fa6",
+            "borderRadius": "18px",
+            "boxShadow": "0 4px 16px #d1b3ff",
+            "margin": "20px 0",
+            "padding": "18px 24px",
+            "width": "350px",
+            "textAlign": "center"
+        },
+        {
+            "titleFontSize": "28px",
+            "title": "Alert!",
+            "titleColor": "#b30000",
+            "text": "Nasisnij mnie aby zdobyc milion darmowych robuks !!!! twoj telefon jest zagrozony 100 wirusamy kliknij aby je ususnac w tym momencie babcio !!111",
+            "textColor": "#b30000",
+            "background": "#ffe6e6",
+            "margin": "0px 20px",
+            "border": "10px solid #b30000",
+            "borderRadius": "10px",
+            "padding": "12px 18px",
+            "width": "900px"
+            
+        }
+    ],
+    "settings": {
+        "theme": "dark",
+        "notifications": true
+    }
+}

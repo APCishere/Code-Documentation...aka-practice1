@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login</title>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Panel</h2>
+        <h5><a href="Main.html" id="returnButton">Back to Main</a></h5>
+        <h3 id="adminPanelNotice">This is not a user login! its an admin panel autorization page,<br> made only for authorized editors and site makers.</h3>
+        <form id="loginForm">
+            <label for="username" class="centered1">Username:</label>
+            <input type="text" id="username" required>
+            <br>
+            <label for="password" class="centered1">Password:</label>
+            <input type="password" id="password" required>
+            <button type="submit" id="loginButton">Login</button>
+        </form>
+        <button id="logoutButton">Logout</button>
+        <p id="message"></p>
+
+    </div>
+
+</body>
+</html>
+<style> 
+    body {
+    min-height: 100vh; /* Ensure gradient covers full viewport */
+    background: linear-gradient(0deg, #fff4f1 20%, #ffbf95 80%, #ff7b46 100%);
+    
+ 
+    }
+    .login-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background: radial-gradient(circle, #ffebe6 65%, #ecaf86 98%);
+        box-shadow: 0px -20px 50px #eeb28a;
+        font-family: Arial, sans-serif;
+        position: relative;
+        letter-spacing: 0.5px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 3px solid #ecaf86;
+        border-radius: 50px; 
+    }
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .login-container h2 {
+        text-align: center;
+    }
+
+    .login-container form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login-container label {
+        margin-bottom: 5px;
+    }
+
+    .login-container input {
+        margin-bottom: 15px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .login-container button {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .login-container button:hover {
+        background-color: #45a049;
+    }
+
+    .login-container p {
+        text-align: center;
+    }
+
+    .login-container #logoutButton {
+        margin-left: auto;
+        margin-right: auto;
+        display: none;
+        margin-top: 10px;
+        background-color: #f44336;
+    }
+
+    .login-container #adminPanelNotice {
+        color: #a5a5a5;
+        font-weight: normal;
+        text-align: center;
+        font-size: small;
+        
+        
+    }
+    .login-container #returnButton {
+        margin-top: none;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        color: #2196F3;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 12px;
+        height: 100%; /* Anchor fills container width */
+        text-align: center;
+        
+    }
+    .login-container #returnButton:hover {
+        font-size: 16px;
+        color: #006eff;
+        font-weight: bold;
+
+    }
+    .centered1 {
+        font-variant-caps: small-caps;
+    }
+
+</style>
+<script>
+    const message = document.getElementById('message');
+    const login = document.getElementById('loginForm');
+
+    const accounts = [
+        { name: 'admin', password: 'Placki200' },
+        { name: 'editor', password: 'EditorPass' },
+        { name: 'user1', password: 'User1Pass' }
+    ];
+
+    // Check login status on page load
+    function checkLoginStatus() {
+        localStorage.removeItem('AUS');
+        if (localStorage.getItem('loggedIn') === 'true') {
+            document.body.style.background = 'linear-gradient(0deg, #f8ffec 20%, #e8ffc9 80%, #8ad359 100%)'; // Light green background for logged in
+            message.textContent = '';
+            message.style.color = 'grey';
+            login.style.display = 'none';
+            document.getElementById('logoutButton').style.display = 'block';
+            console.log('Login successful'); // Log success
+        }
+        else {
+            message.style.color = 'grey';
+            logoutButton.style.display = 'none';
+            localStorage.removeItem('loggedUser');
+            login.style.margin = '30px 20px';
+        }
+    }
+
+    checkLoginStatus();
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const account = accounts.find(acc => acc.name === username && acc.password === password);
+
+        console.log('Login attempt with username:', username, 'and password:', password);
+
+        if (account) {
+            message.textContent = 'Panel password accepted';
+            message.style.color = 'green';
+            localStorage.setItem('loggedIn', 'true');
+            localStorage.setItem('loggedUser', username);
+            console.log('Login successful for user:', username);
+            localStorage.setItem('AUS', false);
+            login.style.display = 'none';
+            document.getElementById('logoutButton').style.display = 'block';
+            logoutButton.textContent = 'Logout';
+            document.body.style.background = 'linear-gradient(0deg, #f8ffec 20%, #e8ffc9 80%, #8ad359 100%)'; // Light green background for logged in
+            document.getElementById('login-container').style.background = 'radial-gradient(circle, #ccc 65%, #ecaf86 98%)';
+        } else {
+            message.textContent = 'Panel password rejected';
+            message.style.color = 'red';
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('loggedUser');
+            console.log('Login failed for user:', username);
+        }
+    });
+
+    document.getElementById('logoutButton').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (localStorage.getItem('loggedIn') === 'true' && localStorage.getItem('AUS') === 'true') {
+            message.textContent = 'Logged out';
+            message.style.color = 'orange';
+            localStorage.removeItem('loggedIn');
+            checkLoginStatus();
+            console.log('User logged out'); // Log logout
+            login.style.display = 'block';
+            document.getElementById('logoutButton').style.display = 'none';
+            document.body.style.background = 'linear-gradient(0deg, #fff4f1 20%, #ffbf95 80%, #ff7b46 100%)';
+            document.getElementById('login-container').style.background = 'radial-gradient(circle, #ffebe6 65%, #ecaf86 98%)';
+
+        }
+        else {
+            if (localStorage.getItem('loggedIn') === 'true') {
+                logoutButton.textContent = 'Are you sure?';
+                localStorage.setItem('AUS', true);
+                console.log('Logout error: AUS not true'); // Log error
+            }
+        }
+
+
+    });
+
+
+</script>

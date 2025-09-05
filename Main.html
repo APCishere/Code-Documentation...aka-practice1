@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>APCishere lore stuff</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
+<style>
+</style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="Login" id="login"><a href="login.html">Log in</a></div>
+    </div>
+    </div>
+    <div class="border1">
+        <div class="centered">
+            <h1>APC's Code Documentation</h1>
+            <h4>Use one of the buttons below to navigate into important parts of this site</h4>
+        </div>
+        <div class="hi">
+            <a href="Contribution.html" class="styled-button smaller">Contribute</a>
+            <a href="Contribution.html" class="styled-button space2 smaller">Information</a>
+                <br>
+            <a href="Documentation.html" class="styled-button space">Documentation</a>
+        </div>
+    </div>
+        <div>
+            <input type="text" id="newText" class="adminRequired" placeholder="Enter new div text">
+            <button id="addDivButton" class="adminRequired">Add Div</button>
+        </div>
+        <div style="margin-top:30px;">
+            <h3>Manual Div Creator Example</h3>
+            <input type="text" id="manualDivText" placeholder="Type text for manual div">
+            <button id="manualAddDivButton">Add Manual Div</button>
+            <div id="manualDivArea"></div>
+        </div>
+        <div id="contentArea"></div>
+
+</body>
+</html>
+<style>
+    body {
+    min-height: 100vh; /* Ensure gradient covers full viewport */
+    background: linear-gradient(0deg, #fcf7f7 20%, #fff4e2 80%, #fde8c8 100%);
+ 
+    }
+    
+
+
+    .hi {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .hi button:nth-child(2) {
+        background: linear-gradient(210deg, #fcf3da 40%, #ffbb00 200%);
+    }
+    .centered {        
+        text-align: center;
+        margin-bottom: 50px;
+        font: bold 17px arial;
+        font-family: "Story Script", sans-serif;
+
+    }
+
+    .border1 {
+        border: 3px solid #e9cd81;
+        border-radius: 50px; 
+        box-shadow: 0px 0px 20px 2px #e9ddbc;
+    }
+
+    .styled-button {
+        margin-left: 15px;
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 16.5px;
+        background: linear-gradient(150deg, #ffedbb 40%, #ffbb00 200%);
+        color: #a07b01;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px 3px #fde7aa;
+        letter-spacing: 2px;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        font-variant-caps: all-small-caps;
+        transition: all 0.3s ease-in-out;
+    }
+    .styled-button:hover {
+        background: linear-gradient(150deg, #ffbb00 40%, #fcf3da 200%);
+        box-shadow: 0px 0px 25px 4px #fdfdfc;
+        color:#000000
+    }
+    .space {
+        margin-top: 25px;
+        margin-bottom: 12px;
+        text-align: center;
+        background: linear-gradient(0deg, #ffedbb 40%, #ffae00 200%);
+        font-size: 20px;
+        text-anchor: middle;
+    }
+    .space2 {
+        background: linear-gradient(210deg, #ffedbb 60%, #ffae00 200%);
+    }
+
+    .smaller {
+        font-size: 15px;
+        padding: 10px 25px;
+        color: #af9950;
+    }
+    .top-bar {
+        height: 30px;
+        width: 200px;
+        background: #ffcd60;
+        background: radial-gradient(circle,#ffcd60 0%, #ffdb8d 80%, #ffd988 100%);
+        color: #fcf3da;
+        font-weight: bold;
+        font-size: large;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 20px 0.1px #ffcd60;
+        transition-property: width;
+        transition-duration: 0.3s;
+        transition-timing-function: ease-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .top-bar:hover {
+        width: 700px;
+    }
+
+
+    .Login a{
+
+        color: #a07b01;
+        font-variant-caps: all-small-caps;
+        letter-spacing: 1px;
+        text-decoration: none;
+    }
+
+    .adminRequired {
+        display: none;
+    }
+
+</style>
+<script>
+    const login = document.getElementById('login');
+    const loginLink = login.querySelector('a');
+    if(localStorage.getItem('loggedIn') === 'true') {
+        loginLink.textContent = 'Logged In';
+        loginLink.setAttribute('href', 'login.html');
+    }
+    else {
+        loginLink.textContent = 'Log In';
+        loginLink.setAttribute('href', 'login.html');
+    }
+
+    // Load user data from data.json and display as divs
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            // Display users as before
+            if (data.users && Array.isArray(data.users)) {
+                data.users.forEach(user => {
+                    const div = document.createElement('div');
+                    div.textContent = `User: ${user.name} (Email: ${user.email})`;
+                    div.style.margin = "10px 0";
+                    div.style.padding = "10px";
+                    div.style.background = "#e6f7ff";
+                    div.style.border = "1px solid #86ccec";
+                    div.style.borderRadius = "8px";
+                    document.getElementById('contentArea').appendChild(div);
+                });
+            }
+            // Display saved divs from data.json
+            if (data.divs && Array.isArray(data.divs)) {
+                data.divs.forEach(divData => {
+                    const div = document.createElement('div');
+                    // Title
+                    if (divData.title) {
+                        const title = document.createElement('h4');
+                        title.textContent = divData.title;
+                        if (divData.titleColor) title.style.color = divData.titleColor;
+                        if (divData.titleFontSize) title.style.fontSize = divData.titleFontSize;
+                        if (divData.titleFontFamily) title.style.fontFamily = divData.titleFontFamily;
+                        div.appendChild(title);
+                    }
+                    // Content
+                    const content = document.createElement('div');
+                    content.textContent = divData.text || '';
+                    if (divData.textColor) content.style.color = divData.textColor;
+                    if (divData.textFontSize) content.style.fontSize = divData.textFontSize;
+                    if (divData.textFontFamily) content.style.fontFamily = divData.textFontFamily;
+                    div.appendChild(content);
+                    // Custom styles for the div
+                    div.style.margin = divData.margin || "10px 0";
+                    div.style.padding = divData.padding || "10px";
+                    div.style.background = divData.background || "#ffe6fa";
+                    div.style.border = divData.border || "2px dashed #d18aec";
+                    div.style.borderRadius = divData.borderRadius || "12px";
+                    if (divData.boxShadow) div.style.boxShadow = divData.boxShadow;
+                    if (divData.width) div.style.width = divData.width;
+                    if (divData.textAlign) div.style.textAlign = divData.textAlign;
+                    document.getElementById('contentArea').appendChild(div);
+                });
+            }
+        })
+        .catch(err => {
+            console.error('Failed to load data.json:', err);
+        });
+    // ...existing code for localStorage divs...
+    let n = parseInt(localStorage.getItem('DivCount') || "0", 10);
+    for (let i = 1; i <= n; i++) {
+        const divContent = localStorage.getItem('Div' + i);
+        if (divContent) {
+            const div = document.createElement('div');
+            div.textContent = divContent;
+            div.style.margin = "10px 0"; 
+            div.style.padding = "10px";
+            div.style.background = "#fffbe6";
+            div.style.border = "1px solid #ecaf86";
+            div.style.borderRadius = "8px";
+            document.getElementById('contentArea').appendChild(div);
+        }
+    }
+
+    if (localStorage.getItem('loggedIn') == 'true') {
+        document.querySelectorAll('.adminRequired').forEach(el => {
+            el.style.display = 'block';
+            console.log("User is logged in");
+        });
+    }
+    else {
+        console.log("User is not logged in");
+    }
+
+    document.getElementById('addDivButton').addEventListener('click', function() {
+        let n = parseInt(localStorage.getItem('DivCount') || "0", 10);
+        const text = document.getElementById('newText').value;
+        if (text.trim() !== "") {
+            const newDiv = document.createElement('div');
+            newDiv.textContent = text;
+            newDiv.style.margin = "10px 0";
+            newDiv.style.padding = "10px";
+            newDiv.style.background = "#fffbe6";
+            newDiv.style.border = "1px solid #ecaf86";
+            newDiv.style.borderRadius = "8px";
+            document.getElementById('contentArea').appendChild(newDiv);
+            document.getElementById('newText').value = "";
+            n++;
+            localStorage.setItem('Div' + n, newDiv.textContent);
+            localStorage.setItem('DivCount', n);
+        }
+    });
+
+    // Manual div creation example (not saved, just added to DOM)
+    document.getElementById('manualAddDivButton').addEventListener('click', function() {
+        const text = document.getElementById('manualDivText').value;
+        if (text.trim() !== "") {
+            const newDiv = document.createElement('div');
+            newDiv.textContent = text;
+            newDiv.style.margin = "10px 0";
+            newDiv.style.padding = "10px";
+            newDiv.style.background = "#e6ffe6";
+            newDiv.style.border = "1px solid #8aec86";
+            newDiv.style.borderRadius = "8px";
+            document.getElementById('manualDivArea').appendChild(newDiv);
+            document.getElementById('manualDivText').value = "";
+        }
+    });
+</script>
